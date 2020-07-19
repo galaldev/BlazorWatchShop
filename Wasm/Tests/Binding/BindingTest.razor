@@ -1,0 +1,21 @@
+﻿@page "/bindingtest"
+Text Binding:
+<input type="text" @bind-value="@_currentValue" @bind-value:event="oninput" />
+<br />
+Integer Binding:
+<input type="text" @bind-value="@_currentValueInt" @bind-value:event="oninput" />
+<br />
+Date Binding:
+<input type="text" @bind-value="@_currentValueDate" @bind-value:event="onchange" @bind-value:format="yyyy-MM-dd" />
+<br />
+
+The Current String value is : @_currentValue
+<br />
+The Current Integer value is : @_currentValueInt
+<br />
+The Current Date value is : @_currentValueDate
+@code {
+    public string _currentValue = "empty";
+    public int _currentValueInt = 0;
+    public DateTime _currentValueDate = DateTime.Now;
+}

@@ -1,0 +1,54 @@
+﻿@page "/LifeCyclePage"
+@page "/LifeCyclePage/{Title}"
+<h1>Page</h1>
+
+<h3>@Title</h3>
+<p>Time: @_time.ToLongTimeString()</p>
+
+<button @onclick="ChangeText">Change Text</button>
+<button @onclick="ChangeNumber">Change Number</button>
+<button @onclick="ChangeTime">Change Time</button>
+<LifeCycleComponent Number="_number" Text="@_text" />
+<br />
+<a href="/LifeCyclePage">No Title</a>
+<a href="/LifeCyclePage/Title1">Title1</a>
+<a href="/LifeCyclePage/Title2">Title2</a>
+<a href="/LifeCyclePage/Title3">Title3</a>
+@code {
+    string _text;
+    DateTime _time = DateTime.Now;
+    int _number;
+    void ChangeText() => _text = Guid.NewGuid().ToString();
+    void ChangeNumber() => _number = new Random().Next(10000);
+    void ChangeTime() => _time = DateTime.Now;
+
+    [Parameter]
+    public string Title { get; set; }
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        foreach (var item in parameters)
+            sb.Append($"{item.Name} = {item.Value} , ");
+
+        Console.WriteLine($"Page: SetParametersAsync({sb})");
+        return base.SetParametersAsync(parameters);
+    }
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("Page: OnInitialized");
+        base.OnInitialized();
+    }
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("Page: OnParametersSet");
+
+        base.OnParametersSet();
+    }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine($"Page: OnAfterRender({firstRender})");
+
+        base.OnAfterRender(firstRender);
+    }
+}

@@ -1,0 +1,45 @@
+﻿
+<div class="card">
+    <div class="d-flex justify-content-center p-2">
+        <img src="@ImageUrl" height="200" alt="...">
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">
+            <a href="/product/@Id">@Name</a>
+        </h5>
+        <p class="card-text">@Description</p>
+
+        <p class="text-secondary text-center h2 font-weight-bold">
+            @Price.ToString(CurrencyFormat)
+        </p>
+
+        @ChildContent
+        <a href="#" @onclick="async()=> await OnAddedToCart.InvokeAsync(Name)" class="btn btn-danger w-100"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string ImageUrl { get; set; }
+
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public string Description { get; set; }
+
+    [Parameter]
+    public decimal Price { get; set; }
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [CascadingParameter(Name = "CurrencyFormat")]
+    public string CurrencyFormat { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnAddedToCart { get; set; }
+}

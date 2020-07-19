@@ -1,0 +1,66 @@
+﻿@using System.Linq;
+@implements IDisposable
+<div style="border: 1px solid black;margin:5px;padding:10px;">
+    <h3>Sub</h3>
+    <div style="background-color: rgba(@_r,@_g,@_b,1);padding:10px;">
+        Text = @Text
+        <br />
+        Number = @Number
+    </div>
+    <br />
+    <button @onclick="ChangeColor">Change Color</button>
+</div>
+@code {
+    public LifeCycleComponent()
+    {
+
+    }
+    int _r = 10, _g = 200, _b = 255;
+    void ChangeColor()
+    {
+        var rand = new Random();
+        _r = rand.Next(1, 255);
+        _g = rand.Next(1, 255);
+        _b = rand.Next(1, 255);
+    }
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public int Number { get; set; }
+
+
+    public async override Task SetParametersAsync(ParameterView parameters)
+    {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        foreach (var item in parameters)
+            sb.Append($"{item.Name} = {item.Value} , ");
+        Console.WriteLine($"Sub: SetParametersAsync({sb})");
+        await base.SetParametersAsync(parameters);
+        Text = Text ?? "HHH";
+    }
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("Sub: OnInitialized");
+        base.OnInitialized();
+    }
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("Sub: OnParametersSet");
+
+        base.OnParametersSet();
+    }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine($"Sub: OnAfterRender({firstRender})");
+        if (firstRender)
+            StateHasChanged();
+        base.OnAfterRender(firstRender);
+    }
+    void IDisposable.Dispose()
+    {
+        Console.WriteLine($"Sub: Dispose");
+    }
+
+
+}

@@ -1,0 +1,41 @@
+﻿@page "/"
+@inject ProductService productService
+<div class="container">
+    @if (!string.IsNullOrWhiteSpace(_addedMessage))
+    {
+        <div class="alert alert-success" role="alert">
+            @_addedMessage
+        </div>
+    }
+    <div class="row">
+
+        @foreach (var product in _products)
+        {
+            <div class="col-sm-4 p-2">
+                <ProductItem Name="@product.Name"
+                             Id="@product.Id"
+                             Description="@product.Description"
+                             ImageUrl="@product.ImageUrl"
+                             Price="@product.Price"
+                             OnAddedToCart="ShowAddedMessage">
+                </ProductItem>
+            </div>
+        }
+    </div>
+</div>
+
+@code{
+
+    List<ProductItemVm> _products = new List<ProductItemVm>();
+    protected override void OnInitialized()
+    {
+        _products = productService.GetProducts();
+        base.OnInitialized();
+    }
+    string _addedMessage = "";
+    void ShowAddedMessage(string productName)
+    {
+        _addedMessage = $"Thank you for adding {productName}";
+    }
+
+}

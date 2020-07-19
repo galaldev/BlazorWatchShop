@@ -1,0 +1,53 @@
+﻿@page "/counter"
+@page "/counter/{count:int}"
+@page "/counter/{count:int}/{Increment:int}"
+
+<h1>Counter </h1>
+<p>@Guid.NewGuid()</p>
+<NavLink href="/counter/10">Counter 10</NavLink>
+<NavLink href="/counter/10/5">Counter 10/5</NavLink>
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary"
+        @onclick="IncrementCount"
+        @onclick:stopPropagation
+        @onclick:preventDefault>
+    Click me
+</button>
+
+@code {
+    private int currentCount = 0;
+    [Parameter]
+    public int Count { get; set; }
+    [Parameter]
+    public int Increment { get; set; } = 1;
+    private void IncrementCount()
+    {
+        currentCount+= Increment;
+    }
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        foreach (var item in parameters)
+        {
+            Console.WriteLine($"{item.Name} = {item.Value}");
+        }
+        Console.WriteLine("SetParametersAsync");
+        return base.SetParametersAsync(parameters);
+    }
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("OnParametersSet");
+        base.OnParametersSet();
+    }
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("OnInitialized");
+        base.OnInitialized();
+    }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine("OnAfterRender");
+        base.OnAfterRender(firstRender);
+    }
+}
