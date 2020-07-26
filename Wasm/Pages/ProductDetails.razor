@@ -1,7 +1,7 @@
 ﻿@page "/product/{id:int}"
 @inject ProductService productService
 
-<div @onclick="divClicked" class="zoom@_zoom">
+<div  class="zoom@_zoom">
 
     <ProductItem Name="@_product.Name"
                  Id="@_product.Id"
@@ -12,6 +12,7 @@
         <p>
             @((MarkupString)_product.Specifications)
         </p>
+        <ProductReviews Reviews="_product.Reviews"></ProductReviews>
     </ProductItem>
 </div>
 
