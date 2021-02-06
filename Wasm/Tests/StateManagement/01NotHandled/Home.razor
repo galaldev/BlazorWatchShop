@@ -1,0 +1,18 @@
+﻿@page "/State/NotHandeled"
+<WelcomeMessage User="_user"></WelcomeMessage>
+<EditProfile User="_user"></EditProfile>
+
+@code {
+    UserInfo _user;
+    protected override void OnInitialized()
+    {
+        _user = new UserInfo
+        {
+            Name = "Mohamed Galal",
+            Email = "GalalDev@gmail.com"
+
+        };
+        base.OnInitialized();
+    }
+
+}

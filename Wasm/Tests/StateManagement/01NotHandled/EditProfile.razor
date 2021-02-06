@@ -1,0 +1,15 @@
+﻿<h3>Edit user details</h3>
+<form>
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" @bind="User.Name" />
+    </div>
+    <div class="form-group">
+        <label>Email address</label>
+        <input type="email" class="form-control" @bind="User.Email" />
+    </div>
+    <button type="button" class="btn btn-primary" @onclick="_=> StateHasChanged()">Submit</button>
+</form>
+@code {
+        [Parameter] public UserInfo User { get; set; }
+    }

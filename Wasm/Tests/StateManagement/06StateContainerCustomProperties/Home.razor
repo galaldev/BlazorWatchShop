@@ -1,0 +1,20 @@
+﻿@page "/State/StateContainerCustomProperties"
+@inject StateContainer StateContainer
+@implements IDisposable
+<WelcomeMessage></WelcomeMessage>
+<EditProfile></EditProfile>
+
+@code {
+    protected override void OnInitialized()
+    {
+        StateContainer.OnChange += StateHasChanged;
+        StateContainer.Name = "Mohamed Galal";
+        StateContainer.Email = "GalalDev@gmail.com";
+        base.OnInitialized();
+    }
+    public void Dispose()
+    {
+        StateContainer.OnChange -= StateHasChanged;
+    }
+
+}

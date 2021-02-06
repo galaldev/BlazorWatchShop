@@ -1,0 +1,13 @@
+﻿@inherits StateComponentBase
+<h3>Edit user details</h3>
+<form>
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" @bind="StateContainer.User.Name" />
+    </div>
+    <div class="form-group">
+        <label>Email address</label>
+        <input type="email" class="form-control" @bind="StateContainer.User.Email" />
+    </div>
+    <button type="button" class="btn btn-primary" @onclick="_=> StateContainer.SetUser(StateContainer.User,this)">Submit</button>
+</form>

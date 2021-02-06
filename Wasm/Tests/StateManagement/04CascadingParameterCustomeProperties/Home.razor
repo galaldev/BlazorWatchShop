@@ -1,0 +1,38 @@
+﻿@page "/State/CascadingParameterCustomProperties"
+<CascadingValue Value="this">
+    <WelcomeMessage></WelcomeMessage>
+    <EditProfile></EditProfile>
+</CascadingValue>
+
+@code {
+    UserInfo _user;
+    protected override void OnInitialized()
+    {
+        _user = new UserInfo
+        {
+            Name = "Mohamed Galal",
+            Email = "GalalDev@gmail.com"
+        };
+        base.OnInitialized();
+    }
+    public string Name
+    {
+        get => _user.Name;
+        set
+        {
+            _user.Name = value;
+            StateHasChanged();
+        }
+    }
+    public string Email
+    {
+        get => _user.Email;
+        set
+        {
+            _user.Email = value;
+            StateHasChanged();
+        }
+    }
+  
+  
+}

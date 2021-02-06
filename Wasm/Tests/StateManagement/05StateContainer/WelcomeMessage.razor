@@ -1,0 +1,15 @@
+﻿@inject StateContainer StateContainer
+<h3>Welcome @StateContainer.User.Name</h3>
+<span>@StateContainer.User.Email</span>
+
+@code {
+    protected override void OnInitialized()
+    {
+        StateContainer.OnChange += StateHasChanged;
+        base.OnInitialized();
+    }
+    public void Dispose()
+    {
+        StateContainer.OnChange -= StateHasChanged;
+    }
+}

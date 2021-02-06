@@ -1,0 +1,19 @@
+﻿@page "/State/PassParent"
+<WelcomeMessage Home="this"></WelcomeMessage>
+<EditProfile Home="this"></EditProfile>
+@code {
+    public UserInfo User;
+    protected override void OnInitialized()
+    {
+        User = new UserInfo
+        {
+            Name = "Mohamed Galal",
+            Email = "GalalDev@gmail.com"
+        };
+        base.OnInitialized();
+    }
+    public void ChangeState()
+    {
+        StateHasChanged();
+    }
+}

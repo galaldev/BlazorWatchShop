@@ -1,5 +1,5 @@
 ﻿@page "/product/{id:int}"
-@inject ProductService productService
+@inject ProductService ProductService
 
 <div  class="zoom@_zoom">
 
@@ -21,13 +21,13 @@
     int _zoom = 0;
     protected override void OnInitialized()
     {
-        _product = productService.GetProduct(Id);
+        _product = ProductService.GetProduct(Id);
         base.OnInitialized();
     }
     [Parameter]
     public int Id { get; set; }
 
-    void divClicked()
+    void DivClicked()
     {
         _zoom++;
         if (_zoom > 3) _zoom = 0;

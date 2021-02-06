@@ -1,5 +1,5 @@
 ﻿@page "/"
-@inject ProductService productService
+@inject ProductService ProductService
 <div class="container">
     @if (!string.IsNullOrWhiteSpace(_addedMessage))
     {
@@ -29,7 +29,7 @@
     List<ProductItemVm> _products = new List<ProductItemVm>();
     protected override void OnInitialized()
     {
-        _products = productService.GetProducts();
+        _products = ProductService.GetProducts();
         base.OnInitialized();
     }
     string _addedMessage = "";

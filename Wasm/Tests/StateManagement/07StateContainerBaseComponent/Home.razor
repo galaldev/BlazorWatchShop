@@ -1,0 +1,20 @@
+﻿@inherits StateComponentBase
+@page "/State/StateContainerBaseComponent"
+<WelcomeMessage></WelcomeMessage>
+<EditProfile></EditProfile>
+
+@code {
+    protected override void OnInitialized()
+    {
+
+
+        StateContainer.SetUser(new UserInfo
+        {
+            Name = "Mohamed Galal",
+            Email = "GalalDev@gmail.com"
+        });
+
+        base.OnInitialized();
+    }
+
+}
