@@ -1,0 +1,11 @@
+﻿@page "/CalendarTest"
+<h3>Calendar Test</h3>
+
+<Calendar @bind-Date="_date"></Calendar>
+
+
+<span>Clicked Date is <b>@($"{_date:dd/MM/yyyy}")</b></span>
+<button @onclick="()=> _date = DateTime.Today">Set to Today</button>
+@code {
+    DateTime _date = DateTime.Today.AddMonths(-2);
+}

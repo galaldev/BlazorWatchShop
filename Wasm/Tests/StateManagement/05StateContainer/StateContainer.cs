@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WatchShop.Tests.StateManagement._05StateContainer
 {
@@ -17,6 +14,6 @@ namespace WatchShop.Tests.StateManagement._05StateContainer
             NotifyStateChanged();
         }
 
-        private void NotifyStateChanged() => OnChange?.Invoke();
+        public void NotifyStateChanged() => OnChange?.Invoke();
     }
 }

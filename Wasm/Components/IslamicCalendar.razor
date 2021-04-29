@@ -1,0 +1,95 @@
+﻿@using System.Globalization
+<table class="calendar w-auto h-auto">
+    <thead>
+        <tr>
+            <th class="p-1">
+                <button @onclick="Previous" Class="btn  btn-sm btn-light">
+                    @("<<")
+                </button>
+            </th>
+            <th class="p-1 text-center" colspan="5">
+                @string.Format(this.GetCultureInfo(), "{0:MMMM} - {0:yyyy}", _calendarStartDate)
+            </th>
+            <th class="p-1">
+                <button @onclick="Next" Class="btn  btn-sm btn-light">>></button>
+            </th>
+        </tr>
+        <tr>
+            <th class="text-info p-1">SUN</th>
+            <th class="text-info p-1">MON</th>
+            <th class="text-info p-1">TUE</th>
+            <th class="text-info p-1">WED</th>
+            <th class="text-info p-1">THU</th>
+            <th class="text-info p-1">FRI</th>
+            <th class="text-info p-1">SAT</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int w = 0; w < 6; w++)
+        {
+            <tr>
+
+                @for (int d = 0; d < 7; d++)
+                {
+                    
+                    var day = this.Calendar.AddDays(_displayStartDate, w * 7 + d);
+                    var dayString = $"{this.Calendar.GetDayOfMonth(day):00}";
+                    var dayClass = day == DateTime.Today ? "font-weight-bold" : "";
+                    var selectedClass = day == Date ? "bg-primary" : "";
+
+                    @if (this.Calendar.GetMonth(day) == this.Calendar.GetMonth(_calendarStartDate))
+                    {
+                        <td class="p-1 text-center">
+                            <button class="btn  btn-sm btn-light @dayClass @selectedClass" @onclick="()=> SelectDate(day)">@dayString</button>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="text-black-50 p-1 text-center">
+                            @dayString
+                        </td>
+                    }
+                }
+            </tr>
+
+        }
+    </tbody>
+</table>
+@code {
+
+
+    DateTime _displayStartDate;
+    DateTime _calendarStartDate;
+
+    [Parameter]
+    public System.Globalization.Calendar Calendar { get; set; } = System.Globalization.CultureInfo.CurrentCulture.Calendar;
+    [Parameter]
+    public DateTime Date { get; set; }
+
+    [Parameter]
+    public EventCallback<DateTime> DateChanged { get; set; }
+
+    CultureInfo GetCultureInfo() => Calendar is UmAlQuraCalendar || Calendar is HijriCalendar ? new CultureInfo("ar-Sa") : CultureInfo.CurrentCulture;
+    void ChangeMonth(DateTime date)
+    {
+        _calendarStartDate = new DateTime(this.Calendar.GetYear(date), this.Calendar.GetMonth(date), 1, this.Calendar);
+        _displayStartDate = this.Calendar.AddDays(_calendarStartDate
+            , (int)this.Calendar.GetDayOfWeek(_calendarStartDate) * -1);
+    }
+    protected override void OnParametersSet()
+    {
+        ChangeMonth(Date);
+        base.OnParametersSet();
+    }
+    Task SelectDate(DateTime date)
+    {
+        Date = date;
+        return DateChanged.InvokeAsync(date);
+    }
+
+    public void Next() =>
+        ChangeMonth(this.Calendar.AddMonths( _calendarStartDate,1));
+
+    public void Previous() =>
+        ChangeMonth(this.Calendar.AddMonths(_calendarStartDate, -1));
+}

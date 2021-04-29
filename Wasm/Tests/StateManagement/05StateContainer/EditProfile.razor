@@ -10,7 +10,7 @@
         <label>Email address</label>
         <input type="email" class="form-control" @bind="StateContainer.User.Email" />
     </div>
-    <button type="button" class="btn btn-primary" @onclick="_=> StateContainer.SetUser(StateContainer.User)">Submit</button>
+    <button type="button" class="btn btn-primary" @onclick="_=> StateContainer.NotifyStateChanged()">Submit</button>
 </form>
 @code {
     protected override void OnInitialized()
